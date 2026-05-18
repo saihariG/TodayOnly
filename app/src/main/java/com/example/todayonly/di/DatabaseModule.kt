@@ -2,7 +2,7 @@ package com.example.todayonly.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.todayonly.data.local.TodayOnlyDatabase
+import com.example.todayonly.data.local.AppDatabase
 import com.example.todayonly.data.local.dao.TaskDao
 import dagger.Module
 import dagger.Provides
@@ -21,14 +21,14 @@ class DatabaseModule {
     fun provideDatabase(
         @ApplicationContext
         context: Context
-    ): TodayOnlyDatabase {
+    ): AppDatabase {
         return Room.databaseBuilder(
             context,
-            TodayOnlyDatabase::class.java,
+            AppDatabase::class.java,
             "today_only_db"
         ).build()
     }
 
     @Provides
-    fun provideTaskDao(todayOnlyDatabase: TodayOnlyDatabase) : TaskDao = todayOnlyDatabase.taskDao()
+    fun provideTaskDao(appDatabase: AppDatabase) : TaskDao = appDatabase.taskDao()
 }

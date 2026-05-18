@@ -10,7 +10,7 @@ import com.example.todayonly.data.local.entities.TaskEntity
     version = 1,
     exportSchema = false // setting true saves the schema
 )
-abstract class TodayOnlyDatabase : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
     // entry points to interact with tables
     abstract fun taskDao(): TaskDao
