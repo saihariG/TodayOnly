@@ -18,7 +18,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.todayonly.formatDate
 import com.example.todayonly.presentation.screens.composables.EmptyExpiredTasks
 import com.example.todayonly.presentation.screens.composables.TaskItem
 import com.example.todayonly.presentation.viewmodel.ExpiredTasksViewModel
@@ -58,7 +60,12 @@ fun ExpiredTasksScreen(
                 ) {
                     state.tasksGroupedByDay.forEach { (day, tasks) ->
                         item {
-                            Text(text = "Tasks expired on $day")
+                            Text(
+                                text = "Tasks expired on ${formatDate(day).uppercase()}",
+                                modifier = Modifier.padding(
+                                    start = 16.dp, top = 16.dp
+                                )
+                            )
                         }
                         items(tasks, key = { it.id }) { task ->
                             TaskItem(
