@@ -4,7 +4,7 @@ import com.example.todayonly.domain.model.Task
 import kotlinx.coroutines.flow.Flow
 
 interface TaskRepository {
-    suspend fun addTask(title: String): Long
+    suspend fun addTask(title: String, reminderMillis: Long? = null): Long
 
     fun observeTasks(): Flow<List<Task>>
 

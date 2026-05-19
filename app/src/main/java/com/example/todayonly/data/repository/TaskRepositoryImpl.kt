@@ -17,10 +17,11 @@ class TaskRepositoryImpl @Inject constructor(
     private val clock: Clock
 ) : TaskRepository {
 
-    override suspend fun addTask(title: String): Long {
+    override suspend fun addTask(title: String, reminderMillis: Long?): Long {
         val task = TaskEntity(
             title = title,
-            createdDay = clock.today().toEpochDay()
+            createdDay = clock.today().toEpochDay(),
+            reminderMillis = reminderMillis
         )
 
         return dao.insertTask(task)

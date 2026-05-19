@@ -70,7 +70,7 @@ class TodayOnlyViewModel @Inject constructor(
             }
 
             try {
-                taskRepository.addTask(title)
+                taskRepository.addTask(title, reminder)
                 _uiEvent.emit(UiEvent.ShowSnackBar("Task created"))
             } catch (e: Exception) {
                 _uiEvent.emit(UiEvent.ShowSnackBar(e.message ?: "Failed to create task"))

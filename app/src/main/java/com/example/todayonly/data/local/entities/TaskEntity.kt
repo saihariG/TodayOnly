@@ -9,5 +9,6 @@ data class TaskEntity(
     val id: Long = 0,
     val title: String,
     val createdDay: Long,
-    val isCompleted: Boolean = false
+    val isCompleted: Boolean = false,
+    val reminderMillis: Long? = null
 )
