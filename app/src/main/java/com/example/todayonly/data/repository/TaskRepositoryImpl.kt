@@ -34,7 +34,8 @@ class TaskRepositoryImpl @Inject constructor(
                     id = entity.id,
                     title = entity.title,
                     isCompleted = entity.isCompleted,
-                    createdDay = entity.createdDay
+                    createdDay = entity.createdDay,
+                    reminderMillis = entity.reminderMillis
                 )
             }
         }
@@ -47,7 +48,8 @@ class TaskRepositoryImpl @Inject constructor(
                     id = entity.id,
                     title = entity.title,
                     isCompleted = entity.isCompleted,
-                    createdDay = entity.createdDay
+                    createdDay = entity.createdDay,
+                    reminderMillis = entity.reminderMillis
                 )
             }
         }

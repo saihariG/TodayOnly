@@ -4,5 +4,6 @@ data class Task(
     val id: Long,
     val title: String,
     val isCompleted: Boolean,
-    val createdDay: Long
+    val createdDay: Long,
+    val reminderMillis: Long? = null
 )
