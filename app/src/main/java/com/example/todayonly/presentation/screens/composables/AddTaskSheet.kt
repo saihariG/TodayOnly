@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import com.example.todayonly.formatPickedTime
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -105,7 +106,7 @@ fun AddTaskSheet(
                             if (pickedTime == null) {
                                 "Set a reminder"
                             } else {
-                                "At ${pickedTime!!.hour}:${pickedTime!!.minute}"
+                                "At ${formatPickedTime(pickedTime!!)}"
                             }
                         )
                     },

@@ -1,6 +1,7 @@
 package com.example.todayonly
 
 import java.time.LocalDate
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 fun formatDate(day: Long): String {
@@ -11,4 +12,10 @@ fun formatDate(day: Long): String {
     )
 
     return date.format(formatter)
+}
+
+fun formatPickedTime(time: LocalTime): String {
+    return time.format(
+        DateTimeFormatter.ofPattern("h:mm a")
+    )
 }
