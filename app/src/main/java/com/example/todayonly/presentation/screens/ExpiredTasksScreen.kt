@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -52,26 +53,38 @@ fun ExpiredTasksScreen(
         Box(
             modifier = Modifier.fillMaxSize().padding(padding)
         ) {
-            if (!state.isLoading && state.tasksGroupedByDay.isEmpty()) {
-                EmptyExpiredTasks(modifier = Modifier.align(Alignment.Center))
-            } else {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    state.tasksGroupedByDay.forEach { (day, tasks) ->
-                        item {
-                            Text(
-                                text = "Tasks expired on ${formatDate(day).uppercase()}",
-                                modifier = Modifier.padding(
-                                    start = 16.dp, top = 16.dp
+            when {
+                state.isLoading -> {
+                    CircularProgressIndicator()
+                }
+
+                state.error?.isNotBlank() == true -> {
+                    Text(state.error!!)
+                }
+
+                !state.isLoading && state.tasksGroupedByDay.isEmpty() -> {
+                    EmptyExpiredTasks(modifier = Modifier.align(Alignment.Center))
+                }
+
+                else -> {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        state.tasksGroupedByDay.forEach { (day, tasks) ->
+                            item {
+                                Text(
+                                    text = "Tasks expired on ${formatDate(day).uppercase()}",
+                                    modifier = Modifier.padding(
+                                        start = 16.dp, top = 16.dp
+                                    )
                                 )
-                            )
-                        }
-                        items(tasks, key = { it.id }) { task ->
-                            TaskItem(
-                                task = task,
-                                onMarkedComplete = { /* read-only */ }
-                            )
+                            }
+                            items(tasks, key = { it.id }) { task ->
+                                TaskItem(
+                                    task = task,
+                                    onMarkedComplete = { /* read-only */ }
+                                )
+                            }
                         }
                     }
                 }
