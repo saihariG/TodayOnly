@@ -30,7 +30,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.ZoneId
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -113,8 +116,11 @@ fun AddTaskSheet(
 
             Button(
                 onClick = {
-                    // set reminder
-                    onSubmit(title.trim(), 1L)
+                    val reminderMillis = pickedTime?.let { t ->
+                        val localDateTime = LocalDateTime.of(LocalDate.now(), t)
+                        localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+                    }
+                    onSubmit(title.trim(), reminderMillis)
                 },
                 enabled = title.isNotBlank(),
                 modifier = Modifier
@@ -136,9 +142,8 @@ fun AddTaskSheet(
 
         TimePickerDialog(
             onDismiss = {
-                pickedTime = LocalTime.of(timePickerState.hour, timePickerState.minute)
                 showTimePicker = false
-                        },
+            },
             onConfirm = {
                 pickedTime = LocalTime.of(timePickerState.hour, timePickerState.minute)
                 showTimePicker = false

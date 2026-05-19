@@ -51,12 +51,21 @@ class TodayOnlyViewModel @Inject constructor(
         }
     }
 
-    fun addTask(title: String) {
+    fun addTask(title: String, reminderMillis: Long?) {
         viewModelScope.launch {
             val trimmedTitle = title.trim()
 
             if(trimmedTitle.isBlank()) {
                 _uiEvent.emit(UiEvent.ShowSnackBar("Title cannot be empty"))
+                return@launch
+            }
+
+            // if reminder is set for a time already past
+            val reminder = reminderMillis?.takeIf {
+                it > clock.now().toEpochMilli()
+            }
+            if(reminderMillis != null && reminder == null) {
+                _uiEvent.emit(UiEvent.ShowSnackBar("Reminder time cannot be in the past"))
                 return@launch
             }
 

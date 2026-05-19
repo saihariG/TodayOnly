@@ -132,11 +132,11 @@ fun TodayTasksScreen(
         AddTaskSheet(
             onDismiss = { showAddTaskSheet = false },
             onSubmit = { title, reminder ->
-                viewModel.addTask(title)
+                viewModel.addTask(title, reminder)
                 showAddTaskSheet = false
             },
             onReminderSet = { hour, minute ->
-
+                // can Trigger instant time validation here
             }
         )
     }
