@@ -134,6 +134,9 @@ fun TodayTasksScreen(
             onSubmit = { title, reminder ->
                 viewModel.addTask(title)
                 showAddTaskSheet = false
+            },
+            onReminderSet = { hour, minute ->
+
             }
         )
     }

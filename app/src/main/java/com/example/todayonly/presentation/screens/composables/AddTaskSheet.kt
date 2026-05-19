@@ -19,6 +19,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TimePicker
+import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,7 +36,8 @@ import java.time.LocalTime
 @Composable
 fun AddTaskSheet(
     onDismiss: () -> Unit,
-    onSubmit: (title: String, reminderMillis: Long?) -> Unit
+    onSubmit: (title: String, reminderMillis: Long?) -> Unit,
+    onReminderSet: (hour: Int, minute: Int) -> Unit
 ) {
 
     var title by remember { mutableStateOf("") }
@@ -110,6 +113,7 @@ fun AddTaskSheet(
 
             Button(
                 onClick = {
+                    // set reminder
                     onSubmit(title.trim(), 1L)
                 },
                 enabled = title.isNotBlank(),
@@ -122,6 +126,32 @@ fun AddTaskSheet(
 
     }
 
+    if(showTimePicker) {
 
+        val timePickerState = rememberTimePickerState(
+            initialHour = LocalTime.now().hour,
+            initialMinute = LocalTime.now().minute,
+            is24Hour = false
+        )
+
+        TimePickerDialog(
+            onDismiss = {
+                pickedTime = LocalTime.of(timePickerState.hour, timePickerState.minute)
+                showTimePicker = false
+                        },
+            onConfirm = {
+                pickedTime = LocalTime.of(timePickerState.hour, timePickerState.minute)
+                showTimePicker = false
+                onReminderSet(
+                    timePickerState.hour,
+                    timePickerState.minute
+                )
+            }
+        ) {
+            TimePicker(
+                state = timePickerState
+            )
+        }
+    }
 
 }
