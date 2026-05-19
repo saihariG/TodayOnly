@@ -32,7 +32,8 @@ class TaskRepositoryImpl @Inject constructor(
                 Task(
                     id = entity.id,
                     title = entity.title,
-                    isCompleted = entity.isCompleted
+                    isCompleted = entity.isCompleted,
+                    createdDay = entity.createdDay
                 )
             }
         }
@@ -44,7 +45,8 @@ class TaskRepositoryImpl @Inject constructor(
                 Task(
                     id = entity.id,
                     title = entity.title,
-                    isCompleted = entity.isCompleted
+                    isCompleted = entity.isCompleted,
+                    createdDay = entity.createdDay
                 )
             }
         }

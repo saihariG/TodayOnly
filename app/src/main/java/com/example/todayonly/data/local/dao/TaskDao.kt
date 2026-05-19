@@ -18,7 +18,7 @@ interface TaskDao {
     @Query("SELECT * from tasks WHERE createdDay = :day ORDER BY id DESC")
     fun observeTasks(day: Long): Flow<List<TaskEntity>>
 
-    @Query("SELECT * from tasks WHERE createdDay < :day AND isCompleted = 1 ORDER BY id DESC")
+    @Query("SELECT * from tasks WHERE createdDay < :day ORDER BY createdDay DESC, id DESC")
     fun observeExpiredTasks(day: Long): Flow<List<TaskEntity>>
 
     @Update
