@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,6 +36,8 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
 
+private const val MAX_TITLE_LENGTH = 30
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddTaskSheet(
@@ -47,6 +50,12 @@ fun AddTaskSheet(
 
     var showTimePicker by remember { mutableStateOf(false) }
     var pickedTime by remember { mutableStateOf<LocalTime?>(null) }
+
+    val isTitleOverLimit by remember(title) {
+        derivedStateOf {
+            title.length > MAX_TITLE_LENGTH
+        }
+    }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss
@@ -75,7 +84,13 @@ fun AddTaskSheet(
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
-                )
+                ),
+                isError = isTitleOverLimit,
+                supportingText = {
+                    if (isTitleOverLimit) {
+                        Text("Title cannot exceed $MAX_TITLE_LENGTH characters")
+                    }
+                }
             )
 
             Spacer(Modifier.height(8.dp))
@@ -122,7 +137,7 @@ fun AddTaskSheet(
                     }
                     onSubmit(title.trim(), reminderMillis)
                 },
-                enabled = title.isNotBlank(),
+                enabled = title.isNotBlank() && !isTitleOverLimit,
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
