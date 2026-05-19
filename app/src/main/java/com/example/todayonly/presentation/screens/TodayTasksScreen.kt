@@ -30,7 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.todayonly.presentation.UiEvent
+import com.example.todayonly.presentation.uistates.UiEvent
 import com.example.todayonly.presentation.screens.composables.AddTaskSheet
 import com.example.todayonly.presentation.screens.composables.EmptyScreen
 import com.example.todayonly.presentation.screens.composables.TaskItem
@@ -131,7 +131,7 @@ fun TodayTasksScreen(
     if(showAddTaskSheet) {
         AddTaskSheet(
             onDismiss = { showAddTaskSheet = false },
-            onSubmit = { title ->
+            onSubmit = { title, reminder ->
                 viewModel.addTask(title)
                 showAddTaskSheet = false
             }

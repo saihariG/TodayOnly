@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.todayonly.domain.Clock
 import com.example.todayonly.domain.model.Task
 import com.example.todayonly.domain.repository.TaskRepository
-import com.example.todayonly.presentation.UiEvent
+import com.example.todayonly.presentation.uistates.UiEvent
 import com.example.todayonly.presentation.uistates.TaskUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

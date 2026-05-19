@@ -1,4 +1,4 @@
-package com.example.todayonly.presentation
+package com.example.todayonly.presentation.uistates
 
 sealed interface UiEvent {
 
