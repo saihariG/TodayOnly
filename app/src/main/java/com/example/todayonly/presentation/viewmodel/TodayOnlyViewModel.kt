@@ -36,12 +36,15 @@ class TodayOnlyViewModel @Inject constructor(
             try {
                 taskRepository.observeTasks().collect { tasks ->
                     _state.value = TaskUiState(
-                        tasks = tasks
+                        tasks = tasks,
+                        error = null,
+                        isLoading = false
                     )
                 }
             } catch (e: Exception) {
                 _state.value = TaskUiState(
-                    error = "${e.message} Failed to load tasks"
+                    error = "${e.message} Failed to load tasks",
+                    isLoading = false
                 )
             }
         }

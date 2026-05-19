@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
@@ -89,21 +90,32 @@ fun TodayTasksScreen(
         Box(
             modifier = Modifier.fillMaxSize().padding(padding)
         ) {
-            if(state.tasks.isEmpty()) {
-                EmptyScreen(Modifier.align(Alignment.Center))
-            } else if(state.error != null ) {
-                Text(state.error!!)
-            } else {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items(state.tasks, key = { it.id } ) { task ->
-                        TaskItem(
-                            task = task,
-                            onMarkedComplete = { viewModel.markComplete() }
-                        )
+            when {
+                state.isLoading -> {
+                    CircularProgressIndicator()
+                }
+
+                state.error?.isNotBlank() == true -> {
+                    Text(state.error!!)
+                }
+
+                state.tasks.isEmpty() -> {
+                    EmptyScreen(Modifier.align(Alignment.Center))
+                }
+
+                else -> {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        items(state.tasks, key = { it.id } ) { task ->
+                            TaskItem(
+                                task = task,
+                                onMarkedComplete = { viewModel.markComplete() }
+                            )
+                        }
                     }
                 }
+
             }
         }
 
