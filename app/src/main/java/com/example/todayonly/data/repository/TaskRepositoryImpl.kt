@@ -50,9 +50,9 @@ class TaskRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun markTaskComplete(id: Long) {
+    override suspend fun markTaskComplete(id: Long, isCompleted: Boolean) {
         val task = dao.getTaskById(id) ?: return
-        dao.markTaskComplete(task.copy(isCompleted = true))
+        dao.markTaskComplete(task.copy(isCompleted = isCompleted))
     }
 
 }

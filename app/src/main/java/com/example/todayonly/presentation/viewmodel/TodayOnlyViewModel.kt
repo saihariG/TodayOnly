@@ -3,6 +3,7 @@ package com.example.todayonly.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todayonly.domain.Clock
+import com.example.todayonly.domain.model.Task
 import com.example.todayonly.domain.repository.TaskRepository
 import com.example.todayonly.presentation.UiEvent
 import com.example.todayonly.presentation.uistates.TaskUiState
@@ -68,12 +69,19 @@ class TodayOnlyViewModel @Inject constructor(
         }
     }
 
-    fun deleteTask() {
-
-    }
-
-    fun markComplete() {
-
+    fun markComplete(task: Task) {
+        viewModelScope.launch {
+            try {
+                taskRepository.markTaskComplete(task.id, !task.isCompleted)
+                if(task.isCompleted) {
+                    _uiEvent.emit(UiEvent.ShowSnackBar("Task marked as incomplete"))
+                } else {
+                    _uiEvent.emit(UiEvent.ShowSnackBar("Task marked as completed"))
+                }
+            } catch (e: Exception) {
+                _uiEvent.emit(UiEvent.ShowSnackBar(e.message ?: "Failed to mark task complete"))
+            }
+        }
     }
 
 }

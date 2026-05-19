@@ -10,5 +10,5 @@ interface TaskRepository {
 
     fun observeExpiredTasks(): Flow<List<Task>>
 
-    suspend fun markTaskComplete(id: Long)
+    suspend fun markTaskComplete(id: Long, isCompleted: Boolean)
 }

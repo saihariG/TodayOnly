@@ -110,7 +110,7 @@ fun TodayTasksScreen(
                         items(state.tasks, key = { it.id } ) { task ->
                             TaskItem(
                                 task = task,
-                                onMarkedComplete = { viewModel.markComplete() }
+                                onMarkedComplete = { viewModel.markComplete(task) }
                             )
                         }
                     }
