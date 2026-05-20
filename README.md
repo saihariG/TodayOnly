@@ -15,10 +15,14 @@ expires. Every new day starts with a clean slate.
 ## Screenshots
 
 <p float="left">
-  <img src="" width="150" />
-  <img src="" width="150" /> 
-  <img src="" width="150" />
-  <img src="" width="150" />
+  <img src="https://github.com/user-attachments/assets/d532c00f-e57c-434c-96d7-0fd62a704e30" width="150" />
+  <img src="https://github.com/user-attachments/assets/fd4414d4-e4a3-408a-a08e-a70e239c32c1" width="150" />
+  <img src="https://github.com/user-attachments/assets/19598021-e616-4b46-bcb2-ad95bb61bffd" width="150" />
+  <img src="https://github.com/user-attachments/assets/b602058d-830c-4a05-9452-3895937e3f8e" width="150" />
+  <img src="https://github.com/user-attachments/assets/cfd8fb5c-483b-4c3e-8e64-c5aa5ada4fbe" width="150" />
+  <img src="https://github.com/user-attachments/assets/cde61763-71eb-44b9-88ba-a8a18dc8da0f" width="150" />
+  <img src="https://github.com/user-attachments/assets/69c8b91f-3a34-4ccc-a18c-cb8bf19d3ea2" width="150" />
+  <img src="https://github.com/user-attachments/assets/0ed1afb7-87df-4334-90ba-e22a14933e46" width="150" /> 
 </p>
 
 ## Approach
