@@ -32,6 +32,9 @@ expires. Every new day starts with a clean slate.
 ## Architecture
 
 
+<img width="484" height="785" alt="Screenshot 2026-05-20 at 3 52 22 PM" src="https://github.com/user-attachments/assets/7c9dbf75-59b6-471e-8cb4-9fa76785507b" />
+
+
 
 ## What's implemented?
 
