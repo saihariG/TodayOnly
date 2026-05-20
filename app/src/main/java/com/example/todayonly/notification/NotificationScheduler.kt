@@ -7,10 +7,11 @@ import android.content.Context
 import android.content.Intent
 import androidx.annotation.RequiresPermission
 import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class NotificationSchedulerImpl(
+class NotificationSchedulerImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : NotificationScheduler {
 
