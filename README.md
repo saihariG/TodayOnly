@@ -27,6 +27,12 @@ expires. Every new day starts with a clean slate.
 
 ## Approach
 
+The single biggest decision was: how do you "expire" a task at midnight? The naive approach is a midnight `WorkManager` job that deletes or hides old tasks.
+
+However, every task carries its `createdDay` (days since 1970-01-01 in the
+user's local zone). The "today" query is `WHERE createdEpochDay = :today`. The day-reset is
+therefore implicit, In essence, the query just stops matching old rows. No midnight job or No
+destructive cleanup needed. The expired-todos screen is the same query with `<` instead of `=`.
 
 
 ## Architecture
@@ -45,13 +51,14 @@ expires. Every new day starts with a clean slate.
 - Day reset is automatic (no manual cleanup, no midnight job)
 - Per-task reminder time (within today only) and Local Notifications via `AlarmManager` 
 - "Expired Tasks" screen for previously expired tasks, grouped by day
-- Input validation
+- Strike-through completed tasks
+- Haptic feedback on mark complete
+- Input validation and Empty States
 
 ## Out of scope
 - No accounts, no auth
 - No future-day scheduling
 - No settings screen
-- Light/Dark mode support
 - Deleting/Editing a Task
 
 ## Key decisions and tradeoffs
@@ -70,14 +77,28 @@ expires. Every new day starts with a clean slate.
 
 - Add editTask and DeleteTask features
 - Include notification actions (snooze, mark complete)
-- Improve better UX for Notification Permission
-
+- Expired Tasks live forever right now. I will add a retention policy like delete tasks older than 30 days (running daily via WorkManager)
+- Improve the UX for Notification Permission
+- Light/Dark mode support
+- Write Unit tests for business logic
+- Compose UI tests
+- TimeZone change handling if the user flies to a different timezone. Currently, the app trusts 'ZoneId.systemDefault()'
+- Home-Screen widget
 
 ## What I got stuck on and how I worked through it
 
-### Reminder scheduling
+### **1. Reminder scheduling**
 
 Another challenge was selecting the appropriate scheduling API for local reminders. I initially considered WorkManager, but after evaluating the tradeoffs around timing precision, I switched to AlarmManager for more accurate reminder delivery.
+
+### **2. `AlarmManager` on Android 12+ requires explicit user permission for `SCHEDULE_EXACT_ALARM`.**
+
+The first version crashed with `SecurityException` on an emulator. I added both
+`SCHEDULE_EXACT_ALARM` and `USE_EXACT_ALARM` to the manifest
+
+### **3. Day-reset behaviour - I almost wrote a WorkManager job**
+
+My first instinct was "schedule a worker for midnight that deletes old tasks". However, The query-based design is much efficient
 
 ## Setup Instructions
 
@@ -88,18 +109,6 @@ Another challenge was selecting the appropriate scheduling API for local reminde
 
 ## AI tool usage
 
-https://chatgpt.com/share/6a0e0a84-8e5c-83ea-86f1-fd6425e80701 
+AI conversation transcript which has a record of how I used ChatGPT while working on this project.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+https://chatgpt.com/share/6a0e0a84-8e5c-83ea-86f1-fd6425e80701
