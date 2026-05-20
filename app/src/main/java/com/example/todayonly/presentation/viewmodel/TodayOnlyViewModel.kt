@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.todayonly.domain.Clock
 import com.example.todayonly.domain.model.Task
 import com.example.todayonly.domain.repository.TaskRepository
+import com.example.todayonly.notification.NotificationScheduler
 import com.example.todayonly.presentation.uistates.UiEvent
 import com.example.todayonly.presentation.uistates.TaskUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class TodayOnlyViewModel @Inject constructor(
     private val taskRepository: TaskRepository,
-    private val clock: Clock
+    private val clock: Clock,
+    private val notificationScheduler: NotificationScheduler
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(TaskUiState())
@@ -70,7 +72,14 @@ class TodayOnlyViewModel @Inject constructor(
             }
 
             try {
-                taskRepository.addTask(title, reminder)
+                val id = taskRepository.addTask(title, reminder)
+                if(reminder != null) {
+                    notificationScheduler.scheduleReminder(
+                        taskId = id,
+                        title = trimmedTitle,
+                        reminderTimeMillis = reminder
+                    )
+                }
                 _uiEvent.emit(UiEvent.ShowSnackBar("Task created"))
             } catch (e: Exception) {
                 _uiEvent.emit(UiEvent.ShowSnackBar(e.message ?: "Failed to create task"))
