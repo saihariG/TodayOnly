@@ -25,6 +25,11 @@ expires. Every new day starts with a clean slate.
   <img src="https://github.com/user-attachments/assets/0ed1afb7-87df-4334-90ba-e22a14933e46" width="150" /> 
 </p>
 
+## Demo
+
+[TodayOnly-Demo.webm](https://github.com/user-attachments/assets/95a730e8-af36-4dc0-bb94-5ff2392f4120)
+
+
 ## Approach
 
 The single biggest decision was: how do you "expire" a task at midnight? The naive approach is a midnight `WorkManager` job that deletes or hides old tasks.
